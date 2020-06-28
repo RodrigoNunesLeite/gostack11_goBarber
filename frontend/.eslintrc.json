@@ -30,10 +30,13 @@
     "prettier"
   ],
   "rules": {
+    "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
     "prettier/prettier": "error",
+    "react/prop-types": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "no-unused-expressions": "off",
     "react/jsx-filename-extension": [
       1,
       {
