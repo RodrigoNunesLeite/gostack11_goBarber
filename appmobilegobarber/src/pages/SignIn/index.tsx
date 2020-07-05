@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 
-import { Container } from './styles';
+import { Container, Title } from './styles';
 
 /**
  * como tenho 3 arquivos iguais com tamanhos diferentes,
@@ -13,6 +13,8 @@ const SignIn: React.FC = () => {
   return (
     <Container>
       <Image source={logoImg} />
+
+      <Title>Faça seu logon</Title>
     </Container>
   );
 };
