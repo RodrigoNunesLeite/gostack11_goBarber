@@ -1,4 +1,6 @@
 import React, {
+  useState,
+  useCallback,
   useEffect,
   useRef,
   useImperativeHandle,
@@ -34,6 +36,18 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
     value: defaultValue,
   });
 
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
+  const handleInputFocus = useCallback(() => {
+    setIsFocused(true);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    setIsFocused(false);
+
+    setIsFilled(!!inputValueRef.current.value);
+  }, []);
   /**
    * Primeiro parametro é a Ref e o segundo é o que eu
    * quero jogar dentro da Ref
@@ -66,13 +80,19 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
   }, [fieldName, registerField]);
 
   return (
-    <Container>
-      <Icon name={icon} size={20} color="#666360" />
+    <Container isFocused={isFocused}>
+      <Icon
+        name={icon}
+        size={20}
+        color={isFocused || isFilled ? '#ff9000' : '#666360'}
+      />
       <TextInput
         ref={inputElementRef}
         keyboardAppearance="dark"
         placeholderTextColor="#666369"
         defaultValue={defaultValue}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         onChangeText={value => {
           inputValueRef.current.value = value;
         }}
