@@ -1,4 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import { TextInputProps } from 'react-native';
 import { useField } from '@unform/core';
 
@@ -13,7 +18,15 @@ interface InputValueReference {
   value: string;
 }
 
-const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
+interface InputRef {
+  focus(): void;
+}
+
+// RefForwardingComponent = primeiro parametro é o tipo da ref
+const Input: React.RefForwardingComponent<InputRef, InputProps> = (
+  { name, icon, ...rest },
+  ref,
+) => {
   const inputElementRef = useRef<any>(null);
 
   const { registerField, defaultValue, fieldName, error } = useField(name);
@@ -21,6 +34,15 @@ const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
     value: defaultValue,
   });
 
+  /**
+   * Primeiro parametro é a Ref e o segundo é o que eu
+   * quero jogar dentro da Ref
+   */
+  useImperativeHandle(ref, () => ({
+    focus() {
+      inputElementRef.current.focus();
+    },
+  }));
   /* Assim que o elemento for exibido em tela, será registrado no unform */
   useEffect(() => {
     registerField<string>({
@@ -60,4 +82,4 @@ const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
   );
 };
 
-export default Input;
+export default forwardRef(Input);
