@@ -12,7 +12,7 @@ import authConfig from '../../../config/auth';
 
 import AppError from '../../../errors/AppErrors';
 
-import User from '../../../models/User';
+import User from '../entities/User';
 
 interface Request {
   email: string;
