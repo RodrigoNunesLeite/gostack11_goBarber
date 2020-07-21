@@ -8,11 +8,11 @@ import { compare } from 'bcryptjs';
  * Verifica se o token é válido
  */
 import { sign } from 'jsonwebtoken';
-import authConfig from '../config/auth';
+import authConfig from '../../../config/auth';
 
-import AppError from '../errors/AppErrors';
+import AppError from '../../../errors/AppErrors';
 
-import User from '../models/User';
+import User from '../../../models/User';
 
 interface Request {
   email: string;
