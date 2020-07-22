@@ -9,7 +9,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from '../../users/entities/User';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 // podemos ter propriedades dentro da classe que não são campos da tabela
 // devemos informar o código, o q é o que não é coluna
