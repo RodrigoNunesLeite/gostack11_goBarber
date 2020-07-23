@@ -1,11 +1,11 @@
 import { startOfHour } from 'date-fns';
-import { getCustomRepository } from 'typeorm';
 import Appointment from '../infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import AppError from '@shared/errors/AppErrors';
+import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
+
 
 // o nome aqui da interface é irrelevante
-interface Request {
+interface IRequest {
   provider_id: string;
   date: Date;
 }
@@ -20,12 +20,18 @@ interface Request {
  */
 
 class CreateAppointmentService {
-  public async execute({ date, provider_id }: Request): Promise<Appointment> {
-    const appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  constructor(
+    private appointmentsRepository: IAppointmentsRepository
+  ) {
+
+  }
+
+
+  public async execute({ date, provider_id }: IRequest): Promise<Appointment> {
 
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentInSameDate = await appointmentsRepository.findByDate(
+    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
 
@@ -39,7 +45,7 @@ class CreateAppointmentService {
      *
      * o .save salva os dados no banco
      */
-    const appointment = await appointmentsRepository.create({
+    const appointment = await this.appointmentsRepository.create({
       provider_id,
       date: appointmentDate,
     });
