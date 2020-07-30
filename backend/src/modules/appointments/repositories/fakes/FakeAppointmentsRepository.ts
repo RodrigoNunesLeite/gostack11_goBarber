@@ -4,6 +4,7 @@
 // Vamos armazenar os dados apenas com javascript
 
 import { uuid } from 'uuidv4';
+import { isEqual } from 'date-fns';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
@@ -16,8 +17,8 @@ class AppointmentsRepository implements IAppointmentsRepository {
   // aqui nesse ponto estou dizendo que o retorno da promisse
   // vai ser um appointment ou nulo
   public async findByDate(date: Date): Promise<Appointment | undefined> {
-    const findAppointment = this.appointments.find(
-      appointment => appointment.date === date,
+    const findAppointment = this.appointments.find(appointment =>
+      isEqual(appointment.date, date),
     );
 
     return findAppointment;

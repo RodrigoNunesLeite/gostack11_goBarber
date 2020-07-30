@@ -1,3 +1,5 @@
+import AppError from '@shared/errors/AppErrors';
+
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
@@ -25,7 +27,32 @@ describe('CreateAppointment', () => {
     expect(appointment.provider_id).toBe('1232132123');
   });
 
-  it('should not be able to create two appointments on the same time', () => {
-    expect(1 + 2).toBe(3);
+  it('should not be able to create two appointments on the same time', async () => {
+    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    const createAppointment = new CreateAppointmentService(
+      fakeAppointmentsRepository,
+    );
+
+    /**
+     * 10/05/2020 as 11:00, é maio porque no Date
+     * janeiro é mes 0
+     */
+    const appointmentDate = new Date(2020, 4, 10, 11);
+
+    await createAppointment.execute({
+      date: appointmentDate,
+      provider_id: '1232132123',
+    });
+
+    /**
+     * Aqui espero que o expect seja rejeitado e
+     * retorne um erro q é uma instance de AppError
+     */
+    expect(
+      createAppointment.execute({
+        date: appointmentDate,
+        provider_id: '1232132123',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
