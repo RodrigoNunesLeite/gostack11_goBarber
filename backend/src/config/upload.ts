@@ -6,7 +6,8 @@ import multer from 'multer';
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
 export default {
-  directory: tmpFolder,
+  tmpFolder,
+  uploadsFolder: path.resolve(tmpFolder, 'uploads'),
   /**
    * multer.diskStorage = armazena os arquivos na propria aplicação
    * mas o ideal para criar algo grande é ter um local no servidor
