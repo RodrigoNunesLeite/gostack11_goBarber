@@ -48,7 +48,7 @@ describe('CreateAppointment', () => {
      * Aqui espero que o expect seja rejeitado e
      * retorne um erro q é uma instance de AppError
      */
-    expect(
+    await expect(
       createAppointment.execute({
         date: appointmentDate,
         provider_id: '1232132123',

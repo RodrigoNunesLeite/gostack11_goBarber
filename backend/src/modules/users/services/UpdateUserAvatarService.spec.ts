@@ -44,7 +44,7 @@ describe('UpdateUserAvatar', () => {
     );
 
     // Esperando que o objeto gere um id
-    expect(
+    await expect(
       updateUserAvatar.execute({
         user_id: 'non-existing-user',
         avatarFilename: 'avatar.jpg',
