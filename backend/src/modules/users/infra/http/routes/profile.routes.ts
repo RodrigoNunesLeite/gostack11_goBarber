@@ -8,7 +8,6 @@ const profileRouter = Router();
 const profileController = new ProfileController();
 
 profileRouter.use(ensureAuthenticated);
-console.log('message2');
 profileRouter.get('/', profileController.show);
 profileRouter.put('/', profileController.update);
 

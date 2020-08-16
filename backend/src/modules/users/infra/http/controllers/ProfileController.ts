@@ -4,11 +4,9 @@ import { container } from 'tsyringe';
 import UpdateProfileService from '@modules/users/services/UpdateProfileService';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
 
-console.log('message1');
 export default class ProfileController {
   // Rota para mostrar o perfil do usuario
   public async show(request: Request, response: Response): Promise<Response> {
-    console.log('show');
     const user_id = request.user.id;
 
     const showProfile = container.resolve(ShowProfileService);
