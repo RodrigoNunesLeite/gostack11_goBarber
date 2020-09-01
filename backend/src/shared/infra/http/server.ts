@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import { errors } from 'celebrate';
 import 'express-async-errors';
 
 // o routes aqui se torna um middleware
@@ -17,6 +18,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(routes);
+
+app.use(errors());
 
 // importa que o tratamento global dos erros venha depois das rotas
 // middleware especifico pra tratamento de erros precisa ter 4 parametros
