@@ -1,9 +1,11 @@
 import AppError from '@shared/errors/AppErrors';
 
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import ListProvidersService from './ListProvidersService';
 
 let fakeUsersRepository: FakeUsersRepository;
+let fakeCacheProvider: FakeCacheProvider;
 let listProviders: ListProvidersService;
 
 // describe definimos a categoria do teste
@@ -12,8 +14,11 @@ let listProviders: ListProvidersService;
 describe('ListProviders', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
-
-    listProviders = new ListProvidersService(fakeUsersRepository);
+    fakeCacheProvider = new FakeCacheProvider();
+    listProviders = new ListProvidersService(
+      fakeUsersRepository,
+      fakeCacheProvider,
+    );
   });
 
   // it é a mesma coisa de test, mas significa isso ou isto
