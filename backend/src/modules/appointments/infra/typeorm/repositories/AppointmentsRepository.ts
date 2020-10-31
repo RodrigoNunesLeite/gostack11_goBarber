@@ -16,9 +16,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
   // aqui nesse ponto estou dizendo que o retorno da promisse
   // vai ser um appointment ou nulo
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(
+    date: Date,
+    provider_id: string,
+  ): Promise<Appointment | undefined> {
     const findAppointment = await this.ormRepository.findOne({
-      where: { date },
+      where: { date, provider_id },
     });
 
     return findAppointment;
@@ -74,6 +77,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
             `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`,
         ),
       },
+      relations: ['user'], // traz os dados do usuário
     });
     return appointments;
   }
